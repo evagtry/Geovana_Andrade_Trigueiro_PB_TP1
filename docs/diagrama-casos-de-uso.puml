@@ -1,0 +1,107 @@
+@startuml
+left to right direction
+title <size:20><b>Sistema de Gestão de Biblioteca Universitária</b></size>\n<size:13>Diagrama de Casos de Uso (UML)</size>
+
+hide stereotype
+skinparam dpi 200
+skinparam shadowing false
+skinparam roundCorner 18
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 13
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #546E7A
+skinparam ArrowThickness 1.4
+skinparam titleFontColor #1A237E
+
+skinparam actor {
+  BackgroundColor #FFFFFF
+  BorderColor #37474F
+  FontStyle bold
+}
+skinparam usecase {
+  BorderThickness 1.5
+  BackgroundColor<<membro>> #E3F2FD
+  BorderColor<<membro>> #1565C0
+  BackgroundColor<<admin>> #E8F5E9
+  BorderColor<<admin>> #2E7D32
+  BackgroundColor<<regra>> #FFF3E0
+  BorderColor<<regra>> #EF6C00
+  BackgroundColor<<multa>> #FCE4EC
+  BorderColor<<multa>> #C2185B
+}
+skinparam rectangle {
+  BackgroundColor #FAFAFA
+  BorderColor #90A4AE
+  FontStyle bold
+  FontSize 15
+}
+
+actor "Membro" as M
+actor "Aluno" as A
+actor "Professor" as P
+actor "Funcionário" as F
+actor "Bibliotecário /\nAdministrador" as B
+
+A -up-|> M
+P -up-|> M
+F -up-|> M
+
+rectangle "Sistema de Gestão de Biblioteca" {
+
+  rectangle "Operações do Membro" #E3F2FD {
+    usecase "UC01\nConsultar acervo" as UC01 <<membro>>
+    usecase "UC02\nVerificar disponibilidade" as UC02 <<membro>>
+    usecase "UC03\nSolicitar empréstimo" as UC03 <<membro>>
+    usecase "UC04\nSolicitar devolução" as UC04 <<membro>>
+    usecase "UC05\nReservar livro" as UC05 <<membro>>
+  }
+
+  rectangle "Operações Administrativas" #E8F5E9 {
+    usecase "UC06\nGerenciar acervo" as UC06 <<admin>>
+    usecase "UC07\nGerenciar membros" as UC07 <<admin>>
+    usecase "UC08\nProcessar empréstimo" as UC08 <<admin>>
+    usecase "UC09\nProcessar devolução" as UC09 <<admin>>
+    usecase "UC10\nGerenciar reservas" as UC10 <<admin>>
+    usecase "UC11\nGerenciar multas" as UC11 <<admin>>
+  }
+
+  rectangle "Regras de negócio" #FFF3E0 {
+    usecase "Validar cadastro\ndo membro" as V1 <<regra>>
+    usecase "Verificar limite de\n3 empréstimos ativos" as V2 <<regra>>
+    usecase "Verificar exemplar disponível\ne em bom estado" as V3 <<regra>>
+    usecase "Verificar livro com\nexemplares emprestados" as V4 <<regra>>
+    usecase "Calcular multa\npor atraso" as CM <<multa>>
+  }
+}
+
+M --> UC01
+M --> UC02
+M --> UC03
+M --> UC04
+M --> UC05
+
+B --> UC06
+B --> UC07
+B --> UC08
+B --> UC09
+B --> UC10
+B --> UC11
+
+UC03 ..> UC08 : <<include>>
+UC04 ..> UC09 : <<include>>
+UC08 ..> V1 : <<include>>
+UC08 ..> V2 : <<include>>
+UC08 ..> V3 : <<include>>
+UC05 ..> V1 : <<include>>
+UC05 ..> V4 : <<include>>
+UC09 ..> UC11 : <<include>>
+CM .up.> UC09 : <<extend>>\n[devolução atrasada]
+
+legend right
+  <b>Legenda</b>
+  <back:#E3F2FD>  Azul  </back> Casos de uso do Membro
+  <back:#E8F5E9>  Verde  </back> Casos de uso do Bibliotecário
+  <back:#FFF3E0>  Laranja  </back> Validações (<<include>>)
+  <back:#FCE4EC>  Rosa  </back> Fluxo alternativo (<<extend>>)
+endlegend
+@enduml
