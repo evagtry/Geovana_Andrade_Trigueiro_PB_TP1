@@ -1,0 +1,11 @@
+Sistema de Gestão de Biblioteca Universitária — TP1
+
+Aluna: Geovana Andrade Trigueiro
+Disciplina: Projeto de Bloco: Desenvolvimento Back-End
+Repositório GitHub: https://github.com/evagtry/Geovana_Andrade_Trigueiro_PB_TP1
+Trilha Tecnológica: Java 21 (LTS) + IntelliJ IDEA Community Edition
+
+ Estrutura do Repositório
+
+`docs/`: Documento completo de levantamento de requisitos (funcionais e não funcionais), justificativa de escopo e diagrama de casos de uso em UML (`.png` e `.puml`).
+`src/`: Código-fonte do programa standalone inicial (`Main.java`) desenvolvido de forma procedural, demonstrando tipos primitivos, vetores, operadores e controle de fluxo para os perfis de Membro e Bibliotecário/Administrador
